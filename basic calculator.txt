@@ -1,0 +1,104 @@
+#include <stdio.h>
+
+float add(float x, float y) {
+    return x + y;
+}
+
+float subtract(float x, float y) {
+    return x - y;
+}
+
+float multiply(float x, float y) {
+    return x * y;
+}
+
+float divide(float x, float y) {
+    if (y == 0) {
+        printf("Cannot divide by zero\n");
+        return 0;
+    }
+    return x / y;
+}
+
+float sine(float x) {
+    float radians = x * 3.14159265/180;
+    float result = radians;
+    float term = radians;
+    int i;
+
+    for (i = 3; term * term / i > 0.0001; i += 2) {
+        term = -term * radians * radians / (i * (i - 1));
+        result += term;
+    }
+
+    return result;
+}
+
+float cosine(float x) {
+    float radians = x * 3.14159265 / 180;
+    float result = 1;
+    float term = 1;
+    int i;
+
+    for (i = 2; term * term / i > 0.0001; i += 2) {
+        term = -term * radians * radians / (i * (i - 1));
+        result += term;
+    }
+
+    return result;
+}
+
+float tangent(float x) {
+    return sine(x) / cosine(x);
+}
+
+int main() {
+    char choice;
+    float num1, num2, angle;
+
+    while (1) {
+        printf("Options:\n");
+        printf("Enter 'a' for addition\n");
+        printf("Enter 's' for subtraction\n");
+        printf("Enter 'm' for multiplication\n");
+        printf("Enter 'd' for division\n");
+        printf("Enter 'x' for sine function\n");
+        printf("Enter 'c' for cosine function\n");
+        printf("Enter 't' for tangent function\n");
+        printf("Enter 'q' to quit\n");
+
+        scanf(" %c", &choice);
+
+        if (choice == 'q') {
+            break;
+        } else if (choice == 'a' || choice == 's' || choice == 'm' || choice == 'd') {
+            printf("Enter first number: ");
+            scanf("%f", &num1);
+            printf("Enter second number: ");
+            scanf("%f", &num2);
+            if (choice == 'a') {
+                printf("Result: %f\n", add(num1, num2));
+            } else if (choice == 's') {
+                printf("Result: %f\n", subtract(num1, num2));
+            } else if (choice == 'm') {
+                printf("Result: %f\n", multiply(num1, num2));
+            } else if (choice == 'd') {
+                printf("Result: %f\n", divide(num1, num2));
+            }
+        } else if (choice == 'x' || choice == 'c' || choice == 't') {
+            printf("Enter angle in degrees: ");
+            scanf("%f", &angle);
+            if (choice == 'x') {
+                printf("Result: %f\n", sine(angle));
+            } else if (choice == 'c') {
+                printf("Result: %f\n", cosine(angle));
+            } else if (choice == 't') {
+                printf("Result: %f\n", tangent(angle));
+            }
+        } else {
+            printf("Invalid input\n");
+        }
+    }
+
+    return 0;
+}
